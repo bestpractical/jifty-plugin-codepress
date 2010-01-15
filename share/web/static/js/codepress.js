@@ -48,12 +48,12 @@ CodePress = function(obj) {
 			alert("can't find frame");
 		}
 
-		DOM.Events.addListener( iframe, 'blur', function () {
+		jQuery( iframe ).blur(function () {
 			self.textarea.value = self.getCode();
 			self.textarea.disabled = false;
 			return self;
 		});
-		DOM.Events.addListener( iframe, 'focus', function () {
+		jQuery( iframe ).focus(function () {
 			self.textarea.disabled = true;
 			return self;
 		});
@@ -67,7 +67,7 @@ CodePress = function(obj) {
 		self.src = '/static/codepress/codepress.html?language='+self.language+'&ts='+(new Date).getTime();
 		//if(self.attachEvent) self.attachEvent('onload',self.initialize);
 		//else self.addEventListener('load',self.initialize,false);
-		DOM.Events.addListener(self, 'load', self.initialize);
+		jQuery(self).load(self.initialize);
 	}
 
 	self.getLanguage = function() {
@@ -164,8 +164,4 @@ CodePress.beforeSubmit = function() {
 	}
 }
 
-//if(window.attachEvent) window.attachEvent('onload',CodePress.run);
-//else window.addEventListener('DOMContentLoaded',CodePress.run,false);
-//DOM.Events.addListener(window, "load", CodePress.run);
-// Jifty-specific onLoad hook
-onLoadHook( 'CodePress.run();' );
+jQuery(document).ready(function(){ CodePress.run() });
